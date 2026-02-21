@@ -1,5 +1,5 @@
 # Markdown report is source-of-truth text
 reports/XA103_adaptive_cycle_engine_report.md text eol=lf
 
-# Prefer additive auto-merge for generator script to reduce trivial conflicts
-scripts/generate_xa103_pdf.py text eol=lf merge=union
+# Generator script conflict policy: prefer current branch during merges
+scripts/generate_xa103_pdf.py text eol=lf merge=ours
