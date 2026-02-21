@@ -1,6 +1,5 @@
-# Generated artifact: keep branch-local regenerated copy during merges
-reports/XA103_adaptive_cycle_engine_report.pdf binary merge=ours
-
-# Source files remain text-mergeable
+# Markdown report is source-of-truth text
 reports/XA103_adaptive_cycle_engine_report.md text eol=lf
-scripts/generate_xa103_pdf.py text eol=lf
+
+# Prefer additive auto-merge for generator script to reduce trivial conflicts
+scripts/generate_xa103_pdf.py text eol=lf merge=union
