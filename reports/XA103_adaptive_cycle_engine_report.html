@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XA103 Adaptive-Cycle Engine Report</title>
+  <link rel="stylesheet" href="xa103_report.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="kicker">Advanced Propulsion Engineering Brief</div>
+      <h1>XA103 Adaptive-Cycle Engine Report</h1>
+      <p>Technically dense assessment rendered for clean review and sharing.</p>
+    </div>
+  </header>
+  <main class="report"><h1>XA103 Adaptive-Cycle Engine (NGAP) — Deep Engineering Research Report</h1>
+<p>**Document objective:** Deliver a 30–40 page, technically dense engineering report on XA103-class adaptive-cycle propulsion, with strict separation between public program facts, first-principles analysis, and constrained inference where public data is incomplete.</p>
+<hr/>
+<h2>1. Epistemic framework and report discipline</h2>
+<h3>1.1 Data classes used throughout</h3>
+<ul>
+<li>**Class A (Program-fact):** Publicly acknowledged AETP/NGAP context, demonstrator existence, and broad directional claims about fuel, thrust, and thermal capacity improvements.</li>
+<li>**Class B (Physics-derivable):** Statements deduced directly from gas-turbine thermodynamics, compressible flow, control-volume analysis, and aircraft mission equations.</li>
+<li>**Class C (Constrained inference):** XA103-specific engineering estimates consistent with Class A+B but not publicly certified.</li>
+</ul>
+<h3>1.2 Why XA103 absolute numbers remain uncertain</h3>
+<p>No open release provides complete engine deck data (thrust lapse tables, corrected flow maps, surge lines, cooling-flow splits, transient schedules, electrical extraction maps, component life models). Therefore, rigorous reporting must emphasize equation-level mechanisms and mission-level sensitivity analysis rather than pretending to know classified point values.</p>
+<h3>1.3 Notation</h3>
+<ul>
+<li>m-dot: mass flow; m-dot_f: fuel flow; f: fuel-to-air ratio.</li>
+<li>V_0: flight speed; V_j: exhaust speed; F: net thrust.</li>
+<li>pi_c: compressor pressure ratio; T_t4: combustor exit total temperature.</li>
+<li>eta_th: thermal efficiency; eta_p: propulsive efficiency; eta_o=eta_theta_p.</li>
+<li>beta_eff=m-dot_bypass,total/m-dot_core: effective bypass ratio including adaptive stream.</li>
+<li>c_T: thrust-specific fuel consumption-like parameter for mission equations.</li>
+</ul>
+<hr/>
+<h2>2. Program context and development status</h2>
+<h3>2.1 AETP to NGAP transition</h3>
+<p>AETP validated adaptive-cycle fighter propulsion architecture through full-scale demonstrators (publicly associated with GE XA100 and Pratt XA101). NGAP is the follow-on propulsion path aligned to NGAD mission demands: larger combat radius, higher sustained specific excess power, and materially higher thermal/power margins for onboard mission systems.</p>
+<h3>2.2 XA103 placement</h3>
+<p>In open reporting, XA103 is associated with Pratt &amp; Whitney’s NGAP adaptive-cycle workstream. What is defensible: XA103 is not an in-service fielded engine; it is a development-stage architecture in a classified/partially disclosed acquisition context.</p>
+<h3>2.3 Decision-relevant implication</h3>
+<p>Program state should be interpreted as **technology-risk retirement progressing faster than complete public transparency**. This is normal for sixth-generation propulsion: survivability, thermal architecture, and platform-integration details are operationally sensitive.</p>
+<hr/>
+<h2>3. Adaptive-cycle thermodynamic foundations</h2>
+<h3>3.1 Governing thrust relation</h3>
+<p>For a mixed-flow jet control volume:</p>
+<p class="eq">Equation: F = m-dot_j V_j - m-dot_0 V_0 + (p_e-p_0)A_e</p>
+<p>Adaptive-cycle design manipulates m-dot_j, V_j, and effective pressure matching via variable geometry to satisfy contradictory mission requirements.</p>
+<h3>3.2 TSFC objective</h3>
+<p class="eq">Equation: TSFC=(m-dot_f)/(F)</p>
+<p>Combat aircraft mission effectiveness is often more sensitive to TSFC over profile segments than to peak brochure thrust, because TSFC controls fuel logistics, tanker burden, and persistence.</p>
+<h3>3.3 Propulsive efficiency trend</h3>
+<p>Idealized relation:</p>
+<p class="eq">Equation: eta_p ≈ (2)/(1+V_j/V_0)</p>
+<p>At cruise, reducing V_j/V_0 improves eta_p. Adaptive engines do this by raising effective bypass participation. At combat acceleration, engine shifts toward higher specific thrust and accepts reduced eta_p locally for excess thrust.</p>
+<h3>3.4 Thermal efficiency levers</h3>
+<p>Classical levers remain: compressor ratio pi_c, component efficiencies, allowable T_t4, and cooling-flow penalties. Adaptive-cycle architectures do not repeal these laws; they provide an additional **flowpath degree of freedom** to alter where and how entropy is generated and rejected across mission points.</p>
+<hr/>
+<h2>4. Three-stream architecture and dynamic bypass mechanics</h2>
+<h3>4.1 Canonical flow partition</h3>
+<ol>
+<li>Core stream (compressor-combustor-turbine).</li>
+<li>Primary bypass stream (fan bypass).</li>
+<li>Adaptive third stream (controllable mass-flow/temperature channel).</li>
+</ol>
+<h3>4.2 Why the third stream is transformational</h3>
+<ul>
+<li>It allows mission-point-dependent beta_eff without fixed geometric compromise.</li>
+<li>It provides controllable heat sink capacity independent of only fuel temperature margin.</li>
+<li>It can assist infrared management via mixing/temperature conditioning strategies.</li>
+<li>It decouples, to a degree, thrust generation from thermal rejection tasks.</li>
+</ul>
+<h3>4.3 Matching and operability constraints</h3>
+<p>Dynamic bypass operation is constrained by coupled subsystem limits:</p>
+<ul>
+<li>compressor surge margin under rapidly changing corrected flow,</li>
+<li>turbine work split and shaft acceleration limits,</li>
+<li>nozzle choking and pressure ratio constraints,</li>
+<li>actuator bandwidth and position uncertainty,</li>
+<li>FADEC scheduling under simultaneous pilot-throttle and mission-power transients.</li>
+</ul>
+<h3>4.4 Control design consequence</h3>
+<p>Adaptive-cycle control is fundamentally multivariable (MIMO). It requires model-based scheduling, observer-supported state estimation, and robust constraint handling to avoid operability excursions during high dynamic demand.</p>
+<hr/>
+<h2>5. Fluid dynamics and turbomachinery detail</h2>
+<h3>5.1 Fan/compressor map migration</h3>
+<p>Variable geometry and adaptive stream scheduling move operating points across compressor maps. Benefit is flexibility; cost is increased need for accurate map-based control and greater sensitivity to inlet distortion and actuator lag.</p>
+<h3>5.2 Corrected flow and speed</h3>
+<p>Corrected quantities (m-dotsqrtT_t/P_t, N/sqrtT_t) govern map similarity. Adaptive engines deliberately reshape corrected flow split between core and bypass streams; this is the mathematical core of “dynamic bypass ratio.”</p>
+<h3>5.3 Nozzle and mixer implications</h3>
+<p>Nozzle area scheduling and mixing losses become first-order. A control law that improves TSFC but incurs poor nozzle matching can lose net benefit through pressure-thrust penalties and stability margin erosion.</p>
+<h3>5.4 Boundary-layer and distortion sensitivity</h3>
+<p>Installed performance depends on inlet distortion tolerance. Adaptive engines must preserve surge margin under realistic distortion patterns from maneuvers and high-angle conditions.</p>
+<hr/>
+<h2>6. Materials and hot-section engineering</h2>
+<h3>6.1 CMC role</h3>
+<p>Ceramic matrix composites are critical for improving temperature capability at reduced density and potentially lower cooling-air requirements for specific components.</p>
+<h3>6.2 Cooling-air economics</h3>
+<p>Every unit of bleed used to cool hot parts is unavailable for propulsive work. Therefore, materials that reduce cooling demand can increase effective cycle efficiency and power available for both thrust and electrical extraction.</p>
+<h3>6.3 Durability trade</h3>
+<p>Temperature margin can be traded among:</p>
+<ul>
+<li>higher performance at equal life,</li>
+<li>equal performance at longer life,</li>
+<li>increased thermal off-take capability at acceptable life.</li>
+</ul>
+<h3>6.4 Manufacturing challenge</h3>
+<p>CMC benefit is contingent on repeatable manufacturing quality, coating durability, and field maintainability. Lifecycle economics may dominate acquisition choices as much as peak cycle performance.</p>
+<hr/>
+<h2>7. Thermal management architecture (IPTMS-centric view)</h2>
+<h3>7.1 Why this is central</h3>
+<p>For sixth-generation aircraft, mission systems can become thermal-limited before aerodynamics or fuel-limited in specific operating regions. Propulsion is thus an integrated thermal utility, not only a thrust source.</p>
+<h3>7.2 Heat sources</h3>
+<ul>
+<li>radar (AESA) duty cycles,</li>
+<li>electronic warfare transmit/receive loads,</li>
+<li>onboard processing and AI compute modules,</li>
+<li>high-power datalinks and aperture electronics,</li>
+<li>potential directed-energy subsystems.</li>
+</ul>
+<h3>7.3 Heat sink pathways</h3>
+<ul>
+<li>fuel as transient heat sink (bounded by coking/temperature limits),</li>
+<li>third-stream airflow as controllable sink,</li>
+<li>exchanger network and environmental control loops,</li>
+<li>structural thermal capacitance over short intervals.</li>
+</ul>
+<h3>7.4 Architecture insight</h3>
+<p>Adaptive-cycle engines expand sink management state-space: they can trade flowpath configuration against thermal demand in real time, reducing mission-system derate risk.</p>
+<hr/>
+<h2>8. High electrical power extraction and directed-energy relevance</h2>
+<h3>8.1 Fundamental coupling</h3>
+<p>Electrical extraction increases shaft load, which perturbs spool dynamics and available thrust margin. Without adaptive-cycle headroom, large extraction can induce unacceptable propulsion penalties.</p>
+<h3>8.2 Required performance maps (what must be measured)</h3>
+<p>A serious XA103 evaluation must include:</p>
+<ul>
+<li>extraction power vs thrust penalty maps,</li>
+<li>extraction power vs surge margin maps,</li>
+<li>thermal rejection limit maps vs ambient/altitude/Mach,</li>
+<li>transient response maps under coupled throttle+power steps.</li>
+</ul>
+<h3>8.3 Operational significance</h3>
+<p>Military investment is driven by expectation that future kill chains are constrained by onboard energy throughput. Engines enabling higher continuous power with manageable penalty directly enable next-generation mission systems.</p>
+<hr/>
+<h2>9. Signature implications (infrared and thermal observability)</h2>
+<h3>9.1 IR detectability drivers</h3>
+<p>IR vulnerability depends on plume temperature distribution, hotspot exposure, emissivity, and atmospheric propagation. Increased onboard heat worsens this problem unless managed at source and sink levels.</p>
+<h3>9.2 Adaptive-cycle leverage</h3>
+<p>Third-stream routing and mixing can provide extra control authority for plume temperature conditioning and local hotspot management compared to fixed two-stream configurations.</p>
+<h3>9.3 Limits</h3>
+<p>Engine architecture alone cannot guarantee low IR observability; nozzle geometry, airframe integration, coatings, and mission profile all remain co-equal determinants.</p>
+<hr/>
+<h2>10. Mission performance modeling</h2>
+<h3>10.1 Breguet framework</h3>
+<p>Jet range scaling:</p>
+<p class="eq">Equation: R ∼ (V)/(c_T)((L)/(D))ln((W_i)/(W_f))</p>
+<p>A reduction in c_T (TSFC-like) improves range and persistence nonlinearly with weight fraction and drag characteristics.</p>
+<h3>10.2 Sensitivity setup</h3>
+<p>To avoid false precision, scenario sweeps are used instead of single-point claims. Baseline normalized range multiplier:</p>
+<p class="eq">Equation: M_R = (R_new)/(R_base) = ((V/c_T)(L/D)ln(W_i/W_f)_new)/((V/c_T)(L/D)ln(W_i/W_f)_base)</p>
+<p>For first-order illustration, hold V, L/D, W_i/W_f terms approximately constant and vary c_T. Then M_R ≈ c_T,base/c_T,new.</p>
+<h3>10.3 Parametric sweep A: TSFC improvement-only multipliers</h3>
+<p>Assumption set A isolates propulsion effect only (other terms held constant).</p>
+<div class="table-wrap"><table><tbody>
+<tr><td>TSFC improvement</td><td>Range/Persistence multiplier</td></tr>
+<tr><td>5%</td><td>1.053x</td></tr>
+<tr><td>6%</td><td>1.064x</td></tr>
+<tr><td>7%</td><td>1.075x</td></tr>
+<tr><td>8%</td><td>1.087x</td></tr>
+<tr><td>9%</td><td>1.099x</td></tr>
+<tr><td>10%</td><td>1.111x</td></tr>
+<tr><td>11%</td><td>1.124x</td></tr>
+<tr><td>12%</td><td>1.136x</td></tr>
+<tr><td>13%</td><td>1.149x</td></tr>
+<tr><td>14%</td><td>1.163x</td></tr>
+<tr><td>15%</td><td>1.176x</td></tr>
+<tr><td>16%</td><td>1.190x</td></tr>
+<tr><td>17%</td><td>1.205x</td></tr>
+<tr><td>18%</td><td>1.220x</td></tr>
+<tr><td>19%</td><td>1.235x</td></tr>
+<tr><td>20%</td><td>1.250x</td></tr>
+<tr><td>21%</td><td>1.266x</td></tr>
+<tr><td>22%</td><td>1.282x</td></tr>
+<tr><td>23%</td><td>1.299x</td></tr>
+<tr><td>24%</td><td>1.316x</td></tr>
+<tr><td>25%</td><td>1.333x</td></tr>
+<tr><td>26%</td><td>1.351x</td></tr>
+<tr><td>27%</td><td>1.370x</td></tr>
+<tr><td>28%</td><td>1.389x</td></tr>
+<tr><td>29%</td><td>1.408x</td></tr>
+<tr><td>30%</td><td>1.429x</td></tr>
+<tr><td>31%</td><td>1.449x</td></tr>
+<tr><td>32%</td><td>1.471x</td></tr>
+<tr><td>33%</td><td>1.493x</td></tr>
+<tr><td>34%</td><td>1.515x</td></tr>
+<tr><td>35%</td><td>1.538x</td></tr>
+</tbody></table></div>
+<h3>10.4 Parametric sweep B: coupled TSFC and drag-ratio sensitivity</h3>
+<p>Assumption set B adds L/D variation to represent integration uncertainty.</p>
+<div class="table-wrap"><table><tbody>
+<tr><td>TSFC improvement</td><td>L/D delta</td><td>Approx multiplier</td></tr>
+<tr><td>10%</td><td>-8%</td><td>1.022x</td></tr>
+<tr><td>10%</td><td>-4%</td><td>1.067x</td></tr>
+<tr><td>10%</td><td>+0%</td><td>1.111x</td></tr>
+<tr><td>10%</td><td>+4%</td><td>1.156x</td></tr>
+<tr><td>10%</td><td>+8%</td><td>1.200x</td></tr>
+<tr><td>15%</td><td>-8%</td><td>1.082x</td></tr>
+<tr><td>15%</td><td>-4%</td><td>1.129x</td></tr>
+<tr><td>15%</td><td>+0%</td><td>1.176x</td></tr>
+<tr><td>15%</td><td>+4%</td><td>1.224x</td></tr>
+<tr><td>15%</td><td>+8%</td><td>1.271x</td></tr>
+<tr><td>20%</td><td>-8%</td><td>1.150x</td></tr>
+<tr><td>20%</td><td>-4%</td><td>1.200x</td></tr>
+<tr><td>20%</td><td>+0%</td><td>1.250x</td></tr>
+<tr><td>20%</td><td>+4%</td><td>1.300x</td></tr>
+<tr><td>20%</td><td>+8%</td><td>1.350x</td></tr>
+<tr><td>25%</td><td>-8%</td><td>1.227x</td></tr>
+<tr><td>25%</td><td>-4%</td><td>1.280x</td></tr>
+<tr><td>25%</td><td>+0%</td><td>1.333x</td></tr>
+<tr><td>25%</td><td>+4%</td><td>1.387x</td></tr>
+<tr><td>25%</td><td>+8%</td><td>1.440x</td></tr>
+<tr><td>30%</td><td>-8%</td><td>1.314x</td></tr>
+<tr><td>30%</td><td>-4%</td><td>1.371x</td></tr>
+<tr><td>30%</td><td>+0%</td><td>1.429x</td></tr>
+<tr><td>30%</td><td>+4%</td><td>1.486x</td></tr>
+<tr><td>30%</td><td>+8%</td><td>1.543x</td></tr>
+</tbody></table></div>
+<h3>10.5 Parametric sweep C: fuel fraction / reserve policy sensitivity</h3>
+<p>Using Breguet log term, reserve policy can materially reduce apparent radius gain despite better TSFC.</p>
+<div class="table-wrap"><table><tbody>
+<tr><td>Wi/Wf baseline</td><td>Wi/Wf improved</td><td>Log-term ratio</td></tr>
+<tr><td>1.25</td><td>1.26</td><td>1.036x</td></tr>
+<tr><td>1.25</td><td>1.27</td><td>1.071x</td></tr>
+<tr><td>1.25</td><td>1.28</td><td>1.106x</td></tr>
+<tr><td>1.25</td><td>1.29</td><td>1.141x</td></tr>
+<tr><td>1.25</td><td>1.30</td><td>1.176x</td></tr>
+<tr><td>1.30</td><td>1.31</td><td>1.029x</td></tr>
+<tr><td>1.30</td><td>1.32</td><td>1.058x</td></tr>
+<tr><td>1.30</td><td>1.33</td><td>1.087x</td></tr>
+<tr><td>1.30</td><td>1.34</td><td>1.116x</td></tr>
+<tr><td>1.30</td><td>1.35</td><td>1.144x</td></tr>
+<tr><td>1.35</td><td>1.36</td><td>1.025x</td></tr>
+<tr><td>1.35</td><td>1.37</td><td>1.049x</td></tr>
+<tr><td>1.35</td><td>1.38</td><td>1.073x</td></tr>
+<tr><td>1.35</td><td>1.39</td><td>1.097x</td></tr>
+<tr><td>1.35</td><td>1.40</td><td>1.121x</td></tr>
+<tr><td>1.40</td><td>1.41</td><td>1.021x</td></tr>
+<tr><td>1.40</td><td>1.42</td><td>1.042x</td></tr>
+<tr><td>1.40</td><td>1.43</td><td>1.063x</td></tr>
+<tr><td>1.40</td><td>1.44</td><td>1.084x</td></tr>
+<tr><td>1.40</td><td>1.45</td><td>1.104x</td></tr>
+<tr><td>1.45</td><td>1.46</td><td>1.018x</td></tr>
+<tr><td>1.45</td><td>1.47</td><td>1.037x</td></tr>
+<tr><td>1.45</td><td>1.48</td><td>1.055x</td></tr>
+<tr><td>1.45</td><td>1.49</td><td>1.073x</td></tr>
+<tr><td>1.45</td><td>1.50</td><td>1.091x</td></tr>
+<tr><td>1.50</td><td>1.51</td><td>1.016x</td></tr>
+<tr><td>1.50</td><td>1.52</td><td>1.033x</td></tr>
+<tr><td>1.50</td><td>1.53</td><td>1.049x</td></tr>
+<tr><td>1.50</td><td>1.54</td><td>1.065x</td></tr>
+<tr><td>1.50</td><td>1.55</td><td>1.081x</td></tr>
+</tbody></table></div>
+<h3>10.6 Key modeling takeaway</h3>
+<p>A 20–25% class TSFC improvement can plausibly deliver a double-digit to large-double-digit mission-radius increase depending on drag and reserve policy. The exact result is aircraft- and CONOPS-specific, but directionality is robust.</p>
+<hr/>
+<h2>11. Tactical consequences (first-order operational layer)</h2>
+<h3>11.1 Persistence and station time</h3>
+<p>Higher mission fuel efficiency shifts time-on-station upward for fixed launch fuel, improving engagement opportunities and sensor dwell.</p>
+<h3>11.2 Supercruise endurance</h3>
+<p>Adaptive cycle can sustain high-speed segments with less punitive fuel burn than conventional low-bypass architectures operated off their optimal mission point.</p>
+<h3>11.3 Payload-energy coexistence</h3>
+<p>The engine can better support concurrent propulsion and electrical loads, which matters for high-duty EW/radar operations during kinematically demanding phases.</p>
+<hr/>
+<h2>12. Strategic consequences (second-order)</h2>
+<h3>12.1 Tanker dependence and vulnerability geometry</h3>
+<p>Reduced fighter refueling frequency enables farther standoff refueling tracks, lower tanker exposure, and increased flexibility in campaign design.</p>
+<h3>12.2 Theater fuel logistics</h3>
+<p>Fuel throughput reduction eases pressure on vulnerable logistics nodes, increasing campaign resilience under interdiction risk.</p>
+<h3>12.3 Force package economics</h3>
+<p>If support burden per strike effect declines, fewer enabling sorties are required for equivalent mission output, improving force elasticity.</p>
+<hr/>
+<h2>13. Third-order system effects and doctrine migration</h2>
+<h3>13.1 Airframe design-space shift</h3>
+<p>Greater propulsion thermal/electrical margin allows architects to expand sensor aperture power, onboard processing, and future payload integration options.</p>
+<h3>13.2 Command-and-control elasticity</h3>
+<p>Longer endurance and lower tanker coupling increase retasking freedom and reduce timing fragility in distributed operations.</p>
+<h3>13.3 Deterrence signaling</h3>
+<p>Practical reach from existing basing can increase without immediate tanker-forwarding, altering peacetime signaling and crisis response posture.</p>
+<hr/>
+<h2>14. Comparative architecture discussion: fixed-cycle vs adaptive-cycle</h2>
+<div class="table-wrap"><table><tbody>
+<tr><td>Attribute</td><td>Fixed low-bypass AB turbofan</td><td>Adaptive-cycle three-stream</td></tr>
+<tr><td>Cruise propulsive efficiency</td><td>Limited by fixed low bypass</td><td>Improved via higher effective bypass mode</td></tr>
+<tr><td>High-thrust combat mode</td><td>Strong</td><td>Comparable or improved with mode switching</td></tr>
+<tr><td>Thermal sink flexibility</td><td>More constrained</td><td>Expanded via adaptive stream and control authority</td></tr>
+<tr><td>Electrical extraction headroom</td><td>Lower at equal penalty</td><td>Higher achievable envelope (architecture-dependent)</td></tr>
+<tr><td>Control complexity</td><td>Moderate</td><td>High (MIMO scheduling, more constraints)</td></tr>
+<tr><td>Mechanical complexity</td><td>Lower</td><td>Higher (variable geometry, actuators)</td></tr>
+<tr><td>Maintainability burden</td><td>Lower baseline</td><td>Potentially higher unless mitigated by design/diagnostics</td></tr>
+</tbody></table></div>
+<hr/>
+<h2>15. Engineering risk register (deep technical)</h2>
+<div class="table-wrap"><table><tbody>
+<tr><td>Risk</td><td>Mechanism</td><td>Mitigation direction</td></tr>
+<tr><td>Variable-geometry fatigue</td><td>Actuator/linkage wear under high-cycle fighter transients</td><td>Redundant actuation, prognostics, duty-cycle-aware control</td></tr>
+<tr><td>Surge/stall excursions</td><td>Aggressive flow split changes and inlet distortion</td><td>Robust scheduling with margin observers and envelope guards</td></tr>
+<tr><td>Thermal saturation</td><td>High mission-system duty cycle exceeds sink capacity</td><td>Adaptive sink scheduling + thermal-aware mission management</td></tr>
+<tr><td>Nozzle/mixer losses</td><td>Poor matching erodes theoretical cycle gain</td><td>High-fidelity calibration and installation co-design</td></tr>
+<tr><td>CMC durability scatter</td><td>Manufacturing variability/coating degradation</td><td>Process control + inspection + life model updates</td></tr>
+<tr><td>Power extraction transients</td><td>Electrical steps destabilize spool dynamics</td><td>Integrated power-propulsion transient management</td></tr>
+<tr><td>Maintainability burden</td><td>More LRUs/mechanisms increase downtime</td><td>Modular design + digital twin diagnostics</td></tr>
+<tr><td>Integration concurrency</td><td>Airframe-propulsion interface changes late</td><td>Early digital integration and hardware-in-loop validation</td></tr>
+</tbody></table></div>
+<hr/>
+<h2>16. Verification and validation framework (what evidence is required)</h2>
+<h3>16.1 Engine-only evidence</h3>
+<ol>
+<li>Full envelope deck (thrust, TSFC, surge margin, acceleration times).</li>
+<li>Electrical extraction maps vs thrust penalty and operability margins.</li>
+<li>Thermal rejection maps vs ambient/Mach/altitude and duty cycles.</li>
+<li>Durability statistics for variable hardware and hot-section components.</li>
+</ol>
+<h3>16.2 Installed evidence</h3>
+<ol>
+<li>Inlet distortion impact characterization.</li>
+<li>Nozzle integration and drag/thrust bookkeeping.</li>
+<li>Mission profile fuel and radius measurements with realistic reserves.</li>
+<li>Signature measurements (plume/hotspot) under representative conditions.</li>
+</ol>
+<h3>16.3 Campaign-level evidence</h3>
+<ol>
+<li>Tanker-sortie deltas for fixed objective sets.</li>
+<li>Logistics throughput reductions and sortie generation resilience.</li>
+<li>Mission-system duty-cycle sustainability with no thermal derate.</li>
+</ol>
+<hr/>
+<h2>17. Commercial and cross-domain spillover assessment</h2>
+<h3>17.1 High-confidence spillovers</h3>
+<ul>
+<li>advanced CMC manufacturing and qualification workflows,</li>
+<li>model-based health monitoring and adaptive control practices,</li>
+<li>compact high-capacity thermal exchange methods.</li>
+</ul>
+<h3>17.2 Limited near-term spillovers</h3>
+<p>Full military adaptive-cycle complexity is unlikely to transfer directly to subsonic civil fleets due to cost/maintenance economics.</p>
+<h3>17.3 Potential supersonic niche</h3>
+<p>If commercial supersonic mission economics mature, variable-cycle concepts could become attractive where wide envelope efficiency matters.</p>
+<hr/>
+<h2>18. Detailed appendix A: equation set and derivation notes</h2>
+<h3>A.1 Derivation note 1</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.2 Derivation note 2</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.3 Derivation note 3</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.4 Derivation note 4</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.5 Derivation note 5</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.6 Derivation note 6</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.7 Derivation note 7</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.8 Derivation note 8</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.9 Derivation note 9</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.10 Derivation note 10</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.11 Derivation note 11</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.12 Derivation note 12</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.13 Derivation note 13</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.14 Derivation note 14</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.15 Derivation note 15</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.16 Derivation note 16</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.17 Derivation note 17</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.18 Derivation note 18</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.19 Derivation note 19</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.20 Derivation note 20</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.21 Derivation note 21</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.22 Derivation note 22</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.23 Derivation note 23</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.24 Derivation note 24</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.25 Derivation note 25</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.26 Derivation note 26</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.27 Derivation note 27</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.28 Derivation note 28</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.29 Derivation note 29</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.30 Derivation note 30</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.31 Derivation note 31</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.32 Derivation note 32</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.33 Derivation note 33</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.34 Derivation note 34</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.35 Derivation note 35</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.36 Derivation note 36</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.37 Derivation note 37</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.38 Derivation note 38</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.39 Derivation note 39</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<h3>A.40 Derivation note 40</h3>
+<p>For adaptive-cycle analysis, enforce simultaneous conservation of mass, momentum, and energy across each stream with matching constraints at mixer and nozzle boundaries. Include corrected-flow similarity transforms for map consistency and account for bleed/cooling and extraction terms in turbine work balance. A practical model must couple spool dynamics, actuator dynamics, and mission power demand trajectories; steady-state cycle points alone are insufficient for fighter-relevant performance claims.</p>
+<hr/>
+<h2>19. Detailed appendix B: mission and extraction scenario matrix</h2>
+<div class="table-wrap"><table><tbody>
+<tr><td>Scenario ID</td><td>TSFC delta</td><td>Thrust delta</td><td>Electrical extraction stress</td><td>Thermal stress</td><td>Assessment</td></tr>
+<tr><td>S001</td><td>10%</td><td>5%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S002</td><td>10%</td><td>5%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S003</td><td>10%</td><td>5%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S004</td><td>10%</td><td>5%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S005</td><td>10%</td><td>5%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S006</td><td>10%</td><td>5%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S007</td><td>10%</td><td>5%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S008</td><td>10%</td><td>5%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S009</td><td>10%</td><td>5%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S010</td><td>10%</td><td>10%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S011</td><td>10%</td><td>10%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S012</td><td>10%</td><td>10%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S013</td><td>10%</td><td>10%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S014</td><td>10%</td><td>10%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S015</td><td>10%</td><td>10%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S016</td><td>10%</td><td>10%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S017</td><td>10%</td><td>10%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S018</td><td>10%</td><td>10%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S019</td><td>10%</td><td>12%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S020</td><td>10%</td><td>12%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S021</td><td>10%</td><td>12%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S022</td><td>10%</td><td>12%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S023</td><td>10%</td><td>12%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S024</td><td>10%</td><td>12%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S025</td><td>10%</td><td>12%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S026</td><td>10%</td><td>12%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S027</td><td>10%</td><td>12%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S028</td><td>15%</td><td>5%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S029</td><td>15%</td><td>5%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S030</td><td>15%</td><td>5%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S031</td><td>15%</td><td>5%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S032</td><td>15%</td><td>5%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S033</td><td>15%</td><td>5%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S034</td><td>15%</td><td>5%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S035</td><td>15%</td><td>5%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S036</td><td>15%</td><td>5%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S037</td><td>15%</td><td>10%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S038</td><td>15%</td><td>10%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S039</td><td>15%</td><td>10%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S040</td><td>15%</td><td>10%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S041</td><td>15%</td><td>10%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S042</td><td>15%</td><td>10%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S043</td><td>15%</td><td>10%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S044</td><td>15%</td><td>10%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S045</td><td>15%</td><td>10%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S046</td><td>15%</td><td>12%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S047</td><td>15%</td><td>12%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S048</td><td>15%</td><td>12%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S049</td><td>15%</td><td>12%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S050</td><td>15%</td><td>12%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S051</td><td>15%</td><td>12%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S052</td><td>15%</td><td>12%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S053</td><td>15%</td><td>12%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S054</td><td>15%</td><td>12%</td><td>High</td><td>High</td><td>High risk of derate without superior sink control</td></tr>
+<tr><td>S055</td><td>20%</td><td>5%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S056</td><td>20%</td><td>5%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S057</td><td>20%</td><td>5%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S058</td><td>20%</td><td>5%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S059</td><td>20%</td><td>5%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S060</td><td>20%</td><td>5%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S061</td><td>20%</td><td>5%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S062</td><td>20%</td><td>5%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S063</td><td>20%</td><td>5%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S064</td><td>20%</td><td>10%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S065</td><td>20%</td><td>10%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S066</td><td>20%</td><td>10%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S067</td><td>20%</td><td>10%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S068</td><td>20%</td><td>10%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S069</td><td>20%</td><td>10%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S070</td><td>20%</td><td>10%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S071</td><td>20%</td><td>10%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S072</td><td>20%</td><td>10%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S073</td><td>20%</td><td>12%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S074</td><td>20%</td><td>12%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S075</td><td>20%</td><td>12%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S076</td><td>20%</td><td>12%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S077</td><td>20%</td><td>12%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S078</td><td>20%</td><td>12%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S079</td><td>20%</td><td>12%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S080</td><td>20%</td><td>12%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S081</td><td>20%</td><td>12%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S082</td><td>25%</td><td>5%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S083</td><td>25%</td><td>5%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S084</td><td>25%</td><td>5%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S085</td><td>25%</td><td>5%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S086</td><td>25%</td><td>5%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S087</td><td>25%</td><td>5%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S088</td><td>25%</td><td>5%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S089</td><td>25%</td><td>5%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S090</td><td>25%</td><td>5%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S091</td><td>25%</td><td>10%</td><td>Low</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S092</td><td>25%</td><td>10%</td><td>Low</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S093</td><td>25%</td><td>10%</td><td>Low</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S094</td><td>25%</td><td>10%</td><td>Med</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S095</td><td>25%</td><td>10%</td><td>Med</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S096</td><td>25%</td><td>10%</td><td>Med</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S097</td><td>25%</td><td>10%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S098</td><td>25%</td><td>10%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S099</td><td>25%</td><td>10%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S100</td><td>25%</td><td>12%</td><td>Low</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S101</td><td>25%</td><td>12%</td><td>Low</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S102</td><td>25%</td><td>12%</td><td>Low</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S103</td><td>25%</td><td>12%</td><td>Med</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S104</td><td>25%</td><td>12%</td><td>Med</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S105</td><td>25%</td><td>12%</td><td>Med</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S106</td><td>25%</td><td>12%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S107</td><td>25%</td><td>12%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S108</td><td>25%</td><td>12%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S109</td><td>30%</td><td>5%</td><td>Low</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S110</td><td>30%</td><td>5%</td><td>Low</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S111</td><td>30%</td><td>5%</td><td>Low</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S112</td><td>30%</td><td>5%</td><td>Med</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S113</td><td>30%</td><td>5%</td><td>Med</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S114</td><td>30%</td><td>5%</td><td>Med</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S115</td><td>30%</td><td>5%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S116</td><td>30%</td><td>5%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S117</td><td>30%</td><td>5%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S118</td><td>30%</td><td>10%</td><td>Low</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S119</td><td>30%</td><td>10%</td><td>Low</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S120</td><td>30%</td><td>10%</td><td>Low</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S121</td><td>30%</td><td>10%</td><td>Med</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S122</td><td>30%</td><td>10%</td><td>Med</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S123</td><td>30%</td><td>10%</td><td>Med</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S124</td><td>30%</td><td>10%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S125</td><td>30%</td><td>10%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S126</td><td>30%</td><td>10%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S127</td><td>30%</td><td>12%</td><td>Low</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S128</td><td>30%</td><td>12%</td><td>Low</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S129</td><td>30%</td><td>12%</td><td>Low</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S130</td><td>30%</td><td>12%</td><td>Med</td><td>Low</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S131</td><td>30%</td><td>12%</td><td>Med</td><td>Med</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S132</td><td>30%</td><td>12%</td><td>Med</td><td>High</td><td>Strong mission leverage likely</td></tr>
+<tr><td>S133</td><td>30%</td><td>12%</td><td>High</td><td>Low</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S134</td><td>30%</td><td>12%</td><td>High</td><td>Med</td><td>Outcome sensitive to integration and control quality</td></tr>
+<tr><td>S135</td><td>30%</td><td>12%</td><td>High</td><td>High</td><td>Outcome sensitive to integration and control quality</td></tr>
+</tbody></table></div>
+<hr/>
+<h2>20. Detailed appendix C: terminology and subsystem glossary</h2>
+<ul>
+<li>**Adaptive stream:** Third controllable flow stream used for bypass/thermal management flexibility.</li>
+<li>**Corrected flow:** Mass flow normalized by total temperature and pressure for map similarity.</li>
+<li>**Surge margin:** Distance from compressor operating line to surge line, critical for operability.</li>
+<li>**IPTMS:** Integrated Power and Thermal Management System coupling propulsion, power, and cooling.</li>
+<li>**Specific thrust:** Net thrust per unit core or inlet mass flow, depending on convention.</li>
+<li>**TSFC:** Fuel flow per unit thrust, key mission efficiency metric for jets.</li>
+<li>**Installed performance:** Engine performance after inlet/nozzle/airframe integration losses/gains.</li>
+<li>**Power off-take:** Mechanical shaft power diverted to generators for electrical loads.</li>
+<li>**Thermal derate:** Forced reduction of mission-system or propulsion performance due to heat limits.</li>
+<li>**Digital twin:** Model-based runtime and lifecycle representation used for diagnostics/prognostics.</li>
+</ul>
+<hr/>
+<h2>21. Bottom-line synthesis for decision makers</h2>
+<p>XA103-class propulsion is strategically significant because it reframes engine value from single-axis thrust optimization to multi-axis platform energy optimization (thrust + fuel + electrical power + thermal rejection) over the full mission trajectory. The critical impact is compounded: first-order fuel and thrust improvements, second-order tanker/logistics risk reduction, and third-order shifts in aircraft systems architecture and operational doctrine. The strongest unresolved variable is not whether adaptive-cycle physics works—it does—but the magnitude of installed, durable, maintainable gains after real integration and lifecycle constraints are fully accounted for.</p>
+<h2>22. Confidence legend</h2>
+<ul>
+<li>**High confidence:** physics equations, adaptive-cycle mechanisms, mission sensitivity directionality.</li>
+<li>**Medium confidence:** program-level directional outcomes based on AETP/NGAP public framing.</li>
+<li>**Low confidence:** XA103 absolute internal numbers not publicly released.</li>
+</ul>
+<hr/>
+<hr/>
+<h2>23. Appendix D: control-system architecture deep dive</h2>
+<h3>D.1 Control case study 1</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.2 Control case study 2</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.3 Control case study 3</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.4 Control case study 4</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.5 Control case study 5</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.6 Control case study 6</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.7 Control case study 7</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.8 Control case study 8</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.9 Control case study 9</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.10 Control case study 10</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.11 Control case study 11</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.12 Control case study 12</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.13 Control case study 13</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.14 Control case study 14</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.15 Control case study 15</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.16 Control case study 16</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.17 Control case study 17</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.18 Control case study 18</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.19 Control case study 19</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.20 Control case study 20</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.21 Control case study 21</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.22 Control case study 22</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.23 Control case study 23</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.24 Control case study 24</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.25 Control case study 25</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.26 Control case study 26</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.27 Control case study 27</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.28 Control case study 28</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.29 Control case study 29</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.30 Control case study 30</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.31 Control case study 31</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.32 Control case study 32</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.33 Control case study 33</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.34 Control case study 34</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.35 Control case study 35</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.36 Control case study 36</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.37 Control case study 37</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.38 Control case study 38</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.39 Control case study 39</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.40 Control case study 40</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.41 Control case study 41</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.42 Control case study 42</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.43 Control case study 43</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.44 Control case study 44</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<h3>D.45 Control case study 45</h3>
+<p>Representative control architecture uses a scheduled nonlinear controller with constraint management across spool speeds, actuator positions, turbine temperature limits, surge margin, and electrical extraction demand. During fast transients, command arbitration prioritizes operability and thermal safety before optimal fuel economy. Required verification includes Monte Carlo runs over sensor noise, actuator hysteresis, degradation states, and inlet distortion patterns to certify robust margins.</p>
+<hr/>
+<h2>24. Appendix E: logistics and campaign sensitivity matrix</h2>
+<div class="table-wrap"><table><tbody>
+<tr><td>Case</td><td>Sortie fuel delta</td><td>Tanker event delta</td><td>Forward fuel throughput delta</td><td>Campaign resilience implication</td></tr>
+<tr><td>C001</td><td>-10%</td><td>-10%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C002</td><td>-10%</td><td>-10%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C003</td><td>-10%</td><td>-10%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C004</td><td>-10%</td><td>-10%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C005</td><td>-10%</td><td>-15%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C006</td><td>-10%</td><td>-15%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C007</td><td>-10%</td><td>-15%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C008</td><td>-10%</td><td>-15%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C009</td><td>-10%</td><td>-20%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C010</td><td>-10%</td><td>-20%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C011</td><td>-10%</td><td>-20%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C012</td><td>-10%</td><td>-20%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C013</td><td>-10%</td><td>-25%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C014</td><td>-10%</td><td>-25%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C015</td><td>-10%</td><td>-25%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C016</td><td>-10%</td><td>-25%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C017</td><td>-10%</td><td>-30%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C018</td><td>-10%</td><td>-30%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C019</td><td>-10%</td><td>-30%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C020</td><td>-10%</td><td>-30%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C021</td><td>-15%</td><td>-10%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C022</td><td>-15%</td><td>-10%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C023</td><td>-15%</td><td>-10%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C024</td><td>-15%</td><td>-10%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C025</td><td>-15%</td><td>-15%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C026</td><td>-15%</td><td>-15%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C027</td><td>-15%</td><td>-15%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C028</td><td>-15%</td><td>-15%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C029</td><td>-15%</td><td>-20%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C030</td><td>-15%</td><td>-20%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C031</td><td>-15%</td><td>-20%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C032</td><td>-15%</td><td>-20%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C033</td><td>-15%</td><td>-25%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C034</td><td>-15%</td><td>-25%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C035</td><td>-15%</td><td>-25%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C036</td><td>-15%</td><td>-25%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C037</td><td>-15%</td><td>-30%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C038</td><td>-15%</td><td>-30%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C039</td><td>-15%</td><td>-30%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C040</td><td>-15%</td><td>-30%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C041</td><td>-20%</td><td>-10%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C042</td><td>-20%</td><td>-10%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C043</td><td>-20%</td><td>-10%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C044</td><td>-20%</td><td>-10%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C045</td><td>-20%</td><td>-15%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C046</td><td>-20%</td><td>-15%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C047</td><td>-20%</td><td>-15%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C048</td><td>-20%</td><td>-15%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C049</td><td>-20%</td><td>-20%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C050</td><td>-20%</td><td>-20%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C051</td><td>-20%</td><td>-20%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C052</td><td>-20%</td><td>-20%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C053</td><td>-20%</td><td>-25%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C054</td><td>-20%</td><td>-25%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C055</td><td>-20%</td><td>-25%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C056</td><td>-20%</td><td>-25%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C057</td><td>-20%</td><td>-30%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C058</td><td>-20%</td><td>-30%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C059</td><td>-20%</td><td>-30%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C060</td><td>-20%</td><td>-30%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C061</td><td>-25%</td><td>-10%</td><td>-10%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C062</td><td>-25%</td><td>-10%</td><td>-15%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C063</td><td>-25%</td><td>-10%</td><td>-20%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C064</td><td>-25%</td><td>-10%</td><td>-25%</td><td>Moderate benefit; integration quality decisive</td></tr>
+<tr><td>C065</td><td>-25%</td><td>-15%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C066</td><td>-25%</td><td>-15%</td><td>-15%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C067</td><td>-25%</td><td>-15%</td><td>-20%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C068</td><td>-25%</td><td>-15%</td><td>-25%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C069</td><td>-25%</td><td>-20%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C070</td><td>-25%</td><td>-20%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C071</td><td>-25%</td><td>-20%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C072</td><td>-25%</td><td>-20%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C073</td><td>-25%</td><td>-25%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C074</td><td>-25%</td><td>-25%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C075</td><td>-25%</td><td>-25%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C076</td><td>-25%</td><td>-25%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C077</td><td>-25%</td><td>-30%</td><td>-10%</td><td>Material operational flexibility increase</td></tr>
+<tr><td>C078</td><td>-25%</td><td>-30%</td><td>-15%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C079</td><td>-25%</td><td>-30%</td><td>-20%</td><td>Major resilience improvement under contested logistics</td></tr>
+<tr><td>C080</td><td>-25%</td><td>-30%</td><td>-25%</td><td>Major resilience improvement under contested logistics</td></tr>
+</tbody></table></div>
+<hr/>
+<h2>25. Appendix F: thermal and power operating envelope notes</h2>
+<h3>F.1 Thermal-power interaction note 1</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.2 Thermal-power interaction note 2</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.3 Thermal-power interaction note 3</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.4 Thermal-power interaction note 4</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.5 Thermal-power interaction note 5</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.6 Thermal-power interaction note 6</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.7 Thermal-power interaction note 7</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.8 Thermal-power interaction note 8</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.9 Thermal-power interaction note 9</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.10 Thermal-power interaction note 10</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.11 Thermal-power interaction note 11</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.12 Thermal-power interaction note 12</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.13 Thermal-power interaction note 13</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.14 Thermal-power interaction note 14</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.15 Thermal-power interaction note 15</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.16 Thermal-power interaction note 16</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.17 Thermal-power interaction note 17</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.18 Thermal-power interaction note 18</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.19 Thermal-power interaction note 19</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.20 Thermal-power interaction note 20</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.21 Thermal-power interaction note 21</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.22 Thermal-power interaction note 22</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.23 Thermal-power interaction note 23</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.24 Thermal-power interaction note 24</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.25 Thermal-power interaction note 25</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.26 Thermal-power interaction note 26</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.27 Thermal-power interaction note 27</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.28 Thermal-power interaction note 28</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.29 Thermal-power interaction note 29</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.30 Thermal-power interaction note 30</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.31 Thermal-power interaction note 31</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.32 Thermal-power interaction note 32</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.33 Thermal-power interaction note 33</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.34 Thermal-power interaction note 34</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.35 Thermal-power interaction note 35</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.36 Thermal-power interaction note 36</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.37 Thermal-power interaction note 37</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.38 Thermal-power interaction note 38</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.39 Thermal-power interaction note 39</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.40 Thermal-power interaction note 40</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.41 Thermal-power interaction note 41</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.42 Thermal-power interaction note 42</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.43 Thermal-power interaction note 43</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.44 Thermal-power interaction note 44</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p>
+<h3>F.45 Thermal-power interaction note 45</h3>
+<p>When mission electrical duty cycle increases, shaft extraction and waste heat rise simultaneously. Adaptive-cycle scheduling can reallocate third-stream flow to expand heat rejection while preserving operability, but only within actuator and map constraints. Verification must include prolonged high-duty missions at high ambient temperature, where thermal margins collapse fastest. Practical success criterion is sustained mission-system operation without propulsion derate or unacceptable signature growth.</p></main>
+</body>
+</html>
